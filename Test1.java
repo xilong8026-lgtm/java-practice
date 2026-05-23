@@ -1,31 +1,32 @@
 public class Test1 {
-    static void main() {
-        int[] arr = {1, 2, 3, 4, 5, 6};
+    public static void main(String[] args) {
 
-        // 顺序可以不同，只要偶数在前、奇数在后
-        int[] result = separate(arr);
-        for (int num : result) {
-            System.out.print(num + " ");
-        }
+        String strA = "abcde";
+        String strB = "cdeab";
+
+        strA = rotate(strA);
+        boolean result = check(strA,strB);
+        System.out.println(result);
+
+
+
 
     }
 
-    public static int [] separate(int[] arr) {
-        int[] result = new int[arr.length];
-        int index = 0;
-
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] % 2 == 0) {
-                result[index] = arr[i];
-                index++;
+    public static boolean check(String strA, String strB){
+        for (int i = 0; i < strA.length(); i++) {
+            strA = rotate(strA);
+            if(strA.equals(strB)){
+                return true;
             }
         }
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] % 2 != 0) {
-                result[index] = arr[i];
-                index++;
-            }
-        }
-        return result;
+        return false;
     }
+
+    public static String rotate(String str){
+        char first = str.charAt(0);
+        String end = str.substring(1);
+        return end + first;
+    }
+
 }

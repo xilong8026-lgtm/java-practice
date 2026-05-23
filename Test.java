@@ -1,43 +1,67 @@
 import java.util.Scanner;
 
 public class Test {
-    static void main() {
-        //1键盘录入机票原价,月份,头等舱或经济舱
+    public static void main(String[] args) {
+        /*键盘录入一个字符串,
+        要求1:长度为小于等于9
+        要求2:只能是数字
+                将内存变成罗马数字
+        注意点:
+        罗马数字里面是没有0
+        如果键盘录入的数字包含0,可以变成""0(长度为0的字符串)   */
 
+        //1,键盘录入
         Scanner sc = new Scanner(System.in);
-        System.out.println("请输入机票的原价");
-        int ticket = sc.nextInt();
-        System.out.println("请输入当前的月份");
-        int month = sc.nextInt();
-        System.out.println("请输入当前购买的舱位 0 头等舱 1 经济舱");
-        int seat = sc.nextInt();
+        String str;
+        while (true) {
+            System.out.println("请输入一个字符串");
 
-        //2先判断月份是旺季还是淡季
-        if(month >= 5 && month <= 10 ){
-            ticket = getTicket(seat, ticket, 0.9, 0.85);
-        }else if((month >= 1 && month <= 4) || (month >= 11 && month <= 12)) {
-            ticket = getTicket(seat, ticket, 0.7, 0.65);
-        }else{
-            System.out.println("键盘录入的月份不合法");
-        }
-        System.out.println(ticket);
+            str = sc.next();
+
+            //2.校验字符串是否满足规则
+            boolean flag = checkStr(str);
+            if (flag) {
+                break;
+            } else {
+                System.out.println("当前的字符串不符合规则.请重新输入");
+                continue;
+            }
         }
 
-    private static int getTicket(int seat, int ticket, double x, double x1) {
-        //旺季 //3继续判断当前机票是经济舱还是头等舱
-        if (seat == 0) {
-            //经济舱
-            ticket = (int) (ticket * x);
-        } else if (seat == 1) {
-            //头等舱
-            ticket = (int) (ticket * x1);
-        } else {
-            System.out.println("没有这个舱位");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            int number = c - 48;
+            String s = changeLuoMA(number);
+            sb.append(s);
+
         }
-        return ticket;
-    }
-    //4根据实际情况计算出对应的价格
+        System.out.println(sb);
 
 
     }
 
+    public static String changeLuoMA(int number) {
+        // 罗马数字 1-9 的字符串数组
+        String[] arr = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+        return arr[number];
+
+    }
+
+    public static boolean checkStr(String str) {
+        //要求1:长度为小于等于9
+        if (str.length() > 9) {
+            return false;
+        }
+        //要求2:只能数字
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        //所有都完毕
+        return true;
+    }
+
+}
